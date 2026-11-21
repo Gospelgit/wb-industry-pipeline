@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_indicator_values
+    description: Latest download of each indicator, one row per country, indicator and year.
+    data_tests:
+      - unique:
+          column_name: "country_iso3 || '-' || indicator_id || '-' || year"
+    columns:
+      - name: country_iso3
+        data_tests: [not_null]
+      - name: indicator_id
+        data_tests: [not_null]
+      - name: year
+        data_tests: [not_null]

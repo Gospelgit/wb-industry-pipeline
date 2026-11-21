@@ -1,0 +1,11 @@
+name: wb_industry
+version: "1.0.0"
+config-version: 2
+profile: wb_industry
+
+model-paths: ["models"]
+
+models:
+  wb_industry:
+    staging:
+      +materialized: view

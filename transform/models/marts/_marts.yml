@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: indicator_coverage
+    description: Share of years with data for each country and indicator. Below 50% is flagged as low coverage.
+    data_tests:
+      - unique:
+          column_name: "country_iso3 || '-' || indicator_id"
+    columns:
+      - name: coverage_pct
+        data_tests: [not_null]
+      - name: low_coverage
+        data_tests: [not_null]
+
+  - name: indicator_year_status
+    description: Countries reporting per indicator and year. A year is provisional when fewer than half have reported.
+    data_tests:
+      - unique:
+          column_name: "indicator_id || '-' || year"
+    columns:
+      - name: is_provisional
+        data_tests: [not_null]

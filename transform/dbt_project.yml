@@ -9,3 +9,5 @@ models:
   wb_industry:
     staging:
       +materialized: view
+    marts:
+      +materialized: table

@@ -1,0 +1,43 @@
+name: Monthly pipeline run
+
+on:
+  schedule:
+    - cron: "17 6 1 * *"   # 06:17 UTC on the 1st of every month (07:17 in Lagos)
+  workflow_dispatch:        # adds a "Run workflow" button for manual runs
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install libraries
+        run: pip install -r requirements.txt
+
+      - name: Fetch indicators
+        run: python ingestion/fetch_indicators.py
+
+      - name: Fetch countries
+        run: python ingestion/fetch_countries.py
+
+      - name: Load raw data into DuckDB
+        run: python ingestion/load_raw.py
+
+      - name: Build and test models
+        working-directory: transform
+        run: dbt build
+
+      - name: Save the database
+        uses: actions/upload-artifact@v4
+        with:
+          name: warehouse
+          path: data/warehouse.duckdb
+          retention-days: 30

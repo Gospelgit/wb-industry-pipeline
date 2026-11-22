@@ -4,17 +4,47 @@ on:
   schedule:
     - cron: "17 6 1 * *"   # 06:17 UTC on the 1st of every month (07:17 in Lagos)
   workflow_dispatch:        # adds a "Run workflow" button for manual runs
+    inputs:
+      force:
+        description: "Run the full pipeline even if there is no new data"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write           # lets the workflow save the dates file back to the repo
 
 jobs:
-  run-pipeline:
+  check:
     runs-on: ubuntu-latest
-
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
     steps:
       - name: Get the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install libraries
+        run: pip install -r requirements.txt
+
+      - name: Check for new World Bank data
+        id: check
+        run: python ingestion/check_updates.py
+
+  run-pipeline:
+    needs: check
+    if: needs.check.outputs.changed == 'true' || inputs.force
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
           cache: pip
@@ -36,8 +66,17 @@ jobs:
         run: dbt build
 
       - name: Save the database
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: warehouse
           path: data/warehouse.duckdb
           retention-days: 30
+
+      - name: Record the World Bank update dates
+        run: |
+          python ingestion/check_updates.py --save
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/last_updated.json
+          git diff --staged --quiet || git commit -m "Record World Bank update dates"
+          git push

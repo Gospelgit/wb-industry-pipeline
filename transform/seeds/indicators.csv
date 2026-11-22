@@ -1,0 +1,7 @@
+indicator_id,short_name,unit,theme
+NV.IND.MANF.ZS,Manufacturing value added,% of GDP,Industry
+NV.IND.TOTL.ZS,Industry value added,% of GDP,Industry
+EG.ELC.ACCS.ZS,Access to electricity,% of population,Infrastructure
+SL.IND.EMPL.ZS,Employment in industry,% of total employment,Labour
+NY.GDP.MKTP.KD,GDP,constant US$,Economy
+TX.VAL.MANF.ZS.UN,Manufactured exports,% of merchandise exports,Trade

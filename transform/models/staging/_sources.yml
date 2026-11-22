@@ -6,3 +6,5 @@ sources:
     tables:
       - name: raw_indicator_values
         description: One row per country, indicator and year, exactly as loaded from the API.
+      - name: raw_countries
+        description: Country details from the World Bank country API. Replaced on every run.

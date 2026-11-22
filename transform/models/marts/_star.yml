@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_country
+    description: One row per country. Income level is the current World Bank classification.
+    columns:
+      - name: country_iso3
+        data_tests: [unique, not_null]
+      - name: ecowas_first_year
+        description: Every country in the project should have a membership record.
+        data_tests: [not_null]
+
+  - name: dim_indicator
+    description: One row per indicator, with a short name and unit for charts.
+    columns:
+      - name: indicator_id
+        data_tests: [unique, not_null]
+      - name: short_name
+        description: Fails if a new indicator is added without a row in seeds/indicators.csv.
+        data_tests: [not_null]
+
+
+  - name: fct_indicator_values
+    description: The numbers, one row per country, indicator and year, with quality and ECOWAS flags.
+    data_tests:
+      - unique:
+          column_name: "country_iso3 || '-' || indicator_id || '-' || year"
+    columns:
+      - name: country_iso3
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_iso3
+      - name: indicator_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_indicator')
+                field: indicator_id
+      - name: is_provisional
+        data_tests: [not_null]
+      - name: is_low_coverage
+        data_tests: [not_null]

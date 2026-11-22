@@ -4,6 +4,7 @@ config-version: 2
 profile: wb_industry
 
 model-paths: ["models"]
+seed-paths: ["seeds"]
 
 models:
   wb_industry:
@@ -11,3 +12,10 @@ models:
       +materialized: view
     marts:
       +materialized: table
+
+seeds:
+  wb_industry:
+    ecowas_membership:
+      +column_types:
+        first_member_year: integer
+        last_member_year: integer

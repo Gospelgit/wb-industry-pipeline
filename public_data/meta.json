@@ -1,0 +1,21 @@
+{
+  "exported_at_utc": "2026-11-24T09:09:28+00:00",
+  "data_run_date": "2026-11-24",
+  "world_bank_last_updated": {
+    "NV.IND.MANF.ZS": "2026-11-11",
+    "NV.IND.TOTL.ZS": "2026-11-11",
+    "EG.ELC.ACCS.ZS": "2026-11-11",
+    "SL.IND.EMPL.ZS": "2026-11-11",
+    "NY.GDP.MKTP.KD": "2026-11-11",
+    "TX.VAL.MANF.ZS.UN": "2026-11-11"
+  },
+  "row_counts": {
+    "countries": 16,
+    "indicators": 6,
+    "values": 2496,
+    "forecasts": 80,
+    "jumps": 36,
+    "coverage": 96
+  },
+  "tests_passed": true
+}

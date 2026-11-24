@@ -1,0 +1,8 @@
+[
+	{"indicator_id":"NY.GDP.MKTP.KD","short_name":"GDP","indicator_name":"GDP (constant 2015 US$)","unit":"constant US$","theme":"Economy"},
+	{"indicator_id":"NV.IND.TOTL.ZS","short_name":"Industry value added","indicator_name":"Industry (including construction), value added (% of GDP)","unit":"% of GDP","theme":"Industry"},
+	{"indicator_id":"NV.IND.MANF.ZS","short_name":"Manufacturing value added","indicator_name":"Manufacturing, value added (% of GDP)","unit":"% of GDP","theme":"Industry"},
+	{"indicator_id":"EG.ELC.ACCS.ZS","short_name":"Access to electricity","indicator_name":"Access to electricity (% of population)","unit":"% of population","theme":"Infrastructure"},
+	{"indicator_id":"SL.IND.EMPL.ZS","short_name":"Employment in industry","indicator_name":"Employment in industry (% of total employment) (modeled ILO estimate)","unit":"% of total employment","theme":"Labour"},
+	{"indicator_id":"TX.VAL.MANF.ZS.UN","short_name":"Manufactured exports","indicator_name":"Manufactures exports (% of merchandise exports)","unit":"% of merchandise exports","theme":"Trade"}
+]

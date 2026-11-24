@@ -29,7 +29,7 @@ This document explains the design decisions behind the pipeline, how data qualit
 
 ## 2. Missing data
 
-Every indicator returns 416 rows (16 countries × 26 years), but that count didn't say anything about completeness: the API returns a row even when the value is empty.
+Every indicator returns 416 rows (16 countries × 26 years), but that count says nothing about completeness: the API returns a row even when the value is empty.
 
 | Indicator | Missing values |
 | --- | --- |
@@ -183,6 +183,8 @@ The models are written in plain Python with no extra libraries, so every line ca
 | Linear trend | Fits a straight line to the last 10 years and extends it |
 | Damped Holt | Tracks a level and a trend; a damping factor makes the trend fade, so the forecast flattens. Settings are chosen by trying 270 combinations and keeping the best fit |
 | Blend | The average of the linear trend and damped Holt |
+
+**Why simple models:** each country has only about 25 yearly data points. Complex models such as neural networks or gradient-boosted trees need far more data than that and tend to overfit, fitting the noise in the past rather than the pattern. With short yearly series, simple methods that are honestly tested usually perform best, and the backtests below bear that out.
 
 **Why a damped trend:** the damping makes the forecast curve and flatten instead of shooting past 100%. That's realistic for electricity access, because growth slows as countries get closer to full coverage.
 

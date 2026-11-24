@@ -11,7 +11,7 @@ on:
         default: false
 
 permissions:
-  contents: write           # lets the workflow save the dates file back to the repo
+  contents: write           # lets the workflow save files back to the repo
 
 jobs:
   check:
@@ -68,6 +68,12 @@ jobs:
       - name: Forecast electricity access
         run: python ml/forecast.py
 
+      - name: Record the World Bank update dates
+        run: python ingestion/check_updates.py --save
+
+      - name: Export JSON for the website
+        run: python publish/export_json.py
+
       - name: Save the database
         uses: actions/upload-artifact@v6
         with:
@@ -75,11 +81,10 @@ jobs:
           path: data/warehouse.duckdb
           retention-days: 30
 
-      - name: Record the World Bank update dates
+      - name: Commit the dates and website data
         run: |
-          python ingestion/check_updates.py --save
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add state/last_updated.json
-          git diff --staged --quiet || git commit -m "Record World Bank update dates"
+          git add state/last_updated.json public_data
+          git diff --staged --quiet || git commit -m "Monthly data refresh"
           git push

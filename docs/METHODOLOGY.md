@@ -29,7 +29,7 @@ This document explains the design decisions behind the pipeline, how data qualit
 
 ## 2. Missing data
 
-Every indicator returns 416 rows (16 countries × 26 years), but that count says nothing about completeness: the API returns a row even when the value is empty.
+Every indicator returns 416 rows (16 countries × 26 years), but that count didn't say anything about completeness: the API returns a row even when the value is empty.
 
 | Indicator | Missing values |
 | --- | --- |

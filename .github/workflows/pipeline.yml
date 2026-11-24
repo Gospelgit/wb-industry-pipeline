@@ -65,6 +65,9 @@ jobs:
         working-directory: transform
         run: dbt build
 
+      - name: Forecast electricity access
+        run: python ml/forecast.py
+
       - name: Save the database
         uses: actions/upload-artifact@v6
         with:

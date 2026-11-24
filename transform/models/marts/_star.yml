@@ -42,3 +42,15 @@ models:
         data_tests: [not_null]
       - name: is_low_coverage
         data_tests: [not_null]
+
+
+
+
+  - name: indicator_jumps
+    description: Every year-on-year change, scored by how many normal wobbles it is from usual for that country and indicator.
+    data_tests:
+      - unique:
+          column_name: "country_iso3 || '-' || indicator_id || '-' || year"
+    columns:
+      - name: score
+        data_tests: [not_null]

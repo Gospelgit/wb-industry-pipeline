@@ -13,8 +13,15 @@ models:
     marts:
       +materialized: table
 
+vars:
+  jump_score_threshold: 5   # how many "normal wobbles" away counts as unusual
+  jump_recent_years: 3      # the warning only looks at the latest few years
+
 seeds:
   wb_industry:
+    reviewed_jumps:
+      +column_types:
+        year: integer  
     ecowas_membership:
       +column_types:
         first_member_year: integer
